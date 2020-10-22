@@ -1,0 +1,30 @@
+{
+  "name": "@nacelle/rise-nuxt-module",
+  "version": "0.0.1",
+  "description": "Integrate Rise.ai's gift card configurator into your Nacelle Nuxt project",
+  "main": "lib/module.js",
+  "scripts": {
+    "test": "jest ./test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/getnacelle/nacelle-rise-nuxt-module.git"
+  },
+  "keywords": [
+    "Nacelle",
+    "Rise",
+    "Rise.ai",
+    "Nuxt",
+    "eCommerce",
+    "e-commerce",
+    "Shopify",
+    "Gift",
+    "Card"
+  ],
+  "author": "Nacelle Inc. (getnacelle.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/getnacelle/nacelle-rise-nuxt-module/issues"
+  },
+  "homepage": "https://github.com/getnacelle/nacelle-rise-nuxt-module#readme"
+}
