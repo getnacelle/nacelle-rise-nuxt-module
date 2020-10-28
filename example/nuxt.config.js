@@ -50,7 +50,8 @@ export default {
     '@nuxtjs/sitemap',
     '@nuxtjs/axios',
     'nuxt-polyfill',
-    'vue-currency-filter/nuxt'
+    'vue-currency-filter/nuxt',
+    '~/../lib/module.js'
   ],
 
   router: {
@@ -86,6 +87,9 @@ export default {
     /* Required Parameters */
     spaceID: process.env.NACELLE_SPACE_ID,
     token: process.env.NACELLE_GRAPHQL_TOKEN,
+
+    // Rise.ai
+    shopifyDomain: process.env.SHOPIFY_DOMAIN,
 
     /* Optional */
 

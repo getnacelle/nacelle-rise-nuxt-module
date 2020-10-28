@@ -80,6 +80,9 @@ export default {
   computed: {
     ...mapGetters('space', ['getMetatag'])
   },
+  mounted() {
+    this.$rise.registerProduct({ product: this.product })
+  },
   methods: {
     ...mapMutations('cart', ['showCart'])
   },

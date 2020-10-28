@@ -1,5 +1,5 @@
 import localforage from 'localforage'
-const isFunc = (func) => (typeof func === 'function')
+const isFunc = func => typeof func === 'function'
 
 export const state = () => ({
   id: null,
@@ -59,14 +59,26 @@ export const actions = {
   async checkoutCreate({ commit, dispatch, state, rootState, rootGetters }) {
     const cartItems = rootGetters['cart/checkoutLineItems']
     const checkoutId = state.id || ''
+    const cartToken = window.sessionStorage.getItem('cartToken')
+    const metafields = cartToken
+      ? [{ key: 'cart_token', value: cartToken }]
+      : []
 
     if (cartItems.length === 0) {
       throw new Error('Cannot checkout with an empty cart')
     }
 
-    let checkout = await this.$nacelle.checkout.process({ cartItems, checkoutId })
+    let checkout = await this.$nacelle.checkout.process({
+      cartItems,
+      checkoutId,
+      metafields
+    })
     if (checkout && checkout.completed) {
-      checkout = await this.$nacelle.checkout.process({ cartItems, checkoutId: '' })
+      checkout = await this.$nacelle.checkout.process({
+        cartItems,
+        checkoutId: '',
+        metafields
+      })
     }
 
     if (!checkout || !checkout.id || !checkout.url) {
@@ -74,7 +86,11 @@ export const actions = {
     }
 
     if (rootState.events) {
-      dispatch('events/checkoutInit', { cart: rootState.cart.lineItems }, { root: true })
+      dispatch(
+        'events/checkoutInit',
+        { cart: rootState.cart.lineItems },
+        { root: true }
+      )
     }
 
     commit('setCheckout', checkout)
@@ -83,7 +99,12 @@ export const actions = {
   async addCheckoutParams({ commit, dispatch, state, rootState }) {
     const queryOperator = state.url.includes('?') ? '&' : '?'
     const linkerParam = await dispatch('getLinkerParam')
-    await commit('setUrl', `${state.url}${queryOperator}c=${JSON.stringify(rootState.user.userData)}&${linkerParam}`)
+    await commit(
+      'setUrl',
+      `${state.url}${queryOperator}c=${JSON.stringify(
+        rootState.user.userData
+      )}&${linkerParam}`
+    )
   },
 
   async getLinkerParam() {
@@ -91,7 +112,7 @@ export const actions = {
       const gaClient = process.browser ? window.ga : undefined
 
       if (typeof gaClient !== 'undefined') {
-        gaClient((tracker) => resolve(tracker.get('linkerParam')))
+        gaClient(tracker => resolve(tracker.get('linkerParam')))
       }
 
       // if no ga resolve with empty string
@@ -99,7 +120,7 @@ export const actions = {
     })
   },
 
-  checkoutRedirect ({ state }) {
+  checkoutRedirect({ state }) {
     if (process.browser) {
       window.location = state.url
     }

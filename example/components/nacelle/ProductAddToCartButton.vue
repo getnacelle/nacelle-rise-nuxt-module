@@ -3,7 +3,7 @@
     <button
       :disabled="disableAtcButton"
       @click="addToCart"
-      class="button is-primary"
+      class="button is-primary Rise-add-to-cart-button"
     >
       <slot>
         <span v-if="showAddToCart">Add to Cart</span>
