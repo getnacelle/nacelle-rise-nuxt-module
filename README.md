@@ -26,7 +26,7 @@ After the package has installed, open `nuxt.config.js`. Under `modules` add `@na
 ```js
 modules: [
   // ...other modules,
-  '@nacelle/rise-nuxt-module"
+  '@nacelle/rise-nuxt-module'
 ],
 ```
 
@@ -49,16 +49,9 @@ nacelle: {
 
 ### Configure the `checkoutCreate` action
 
-By default, the beginning of the `checkoutCreate` action in `~/store/checkout.js` is as follows:
+By default, the `$nacelle.checkout.process` calls in the `checkoutCreate` action in `~/store/checkout.js` are as follows:
 
 ```javascript
-const cartItems = rootGetters['cart/checkoutLineItems']
-const checkoutId = state.id || ''
-
-if (cartItems.length === 0) {
-  throw new Error('Cannot checkout with an empty cart')
-}
-
 let checkout = await this.$nacelle.checkout.process({ cartItems, checkoutId })
 if (checkout && checkout.completed) {
   checkout = await this.$nacelle.checkout.process({ cartItems, checkoutId: '' })
@@ -68,14 +61,8 @@ if (checkout && checkout.completed) {
 For the Rise integration to work as expected, you must update this code to include a new metafield which is passed to the checkout:
 
 ```javascript
-const cartItems = rootGetters['cart/checkoutLineItems']
-const checkoutId = state.id || ''
 const cartToken = window.sessionStorage.getItem('cartToken')
 const metafields = cartToken ? [{ key: 'cart_token', value: cartToken }] : []
-
-if (cartItems.length === 0) {
-  throw new Error('Cannot checkout with an empty cart')
-}
 
 let checkout = await this.$nacelle.checkout.process({
   cartItems,
