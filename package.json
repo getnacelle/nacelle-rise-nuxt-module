@@ -1,6 +1,6 @@
 {
   "name": "@nacelle/rise-nuxt-module",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Integrate Rise.ai's gift card configurator into your Nacelle Nuxt project",
   "main": "lib/module.js",
   "files": [
